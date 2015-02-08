@@ -1,0 +1,7 @@
+body {
+	padding: 50px;
+}
+
+.container.main, .container-fluid.main {
+	padding-top: 25px;
+}
