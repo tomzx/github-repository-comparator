@@ -98,7 +98,7 @@ class Repository
 	 */
 	protected function setTrackingProperties($data)
 	{
-		array_set($data, '_grc.expires_at', time() + 60*60);
+		array_set($data, '_grc.expires_at', time() + config('grc.cache.lifetime'));
 		return $data;
 	}
 
