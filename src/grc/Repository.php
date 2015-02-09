@@ -68,7 +68,15 @@ class Repository
 		$result['_grc']['open_issues_count'] = $result['open_issues_count'] - $result['_grc']['pulls_count'];
 
 		$result = $this->setTrackingProperties($result);
-		$this->collection->insert($result);
+		$this->collection->update(
+		[
+			'full_name' => $result['full_name'],
+		],
+			$result,
+		[
+			'upsert' => true,
+		]
+		);
 
 		return $result;
 	}
