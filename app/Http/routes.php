@@ -11,8 +11,9 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
-Route::post('/', 'WelcomeController@add');
+Route::get('/', ['as' => 'homepage','uses' => 'WelcomeController@index']);
+Route::post('/', ['as' => 'add', 'uses' => 'WelcomeController@add']);
+Route::delete('{repo}', ['as' => 'remove', 'uses' => 'WelcomeController@remove'])->where('repo', '.+/.+');
 
 Route::get('home', 'HomeController@index');
 

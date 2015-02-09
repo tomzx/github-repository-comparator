@@ -1,6 +1,8 @@
 <html data-ng-app="grcApp">
 <head>
 	<meta charset="UTF-8">
+	<meta name="csrf-param" content="_token"/>
+	<meta name="csrf-token" content="{{csrf_token()}}"/>
 	<title>GitHub Repository Comparator</title>
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.min.css')}}"></link>
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap-theme.min.css')}}"></link>
@@ -18,7 +20,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="{{url('/')}}">GitHub Repository Comparator</a>
+				<a class="navbar-brand" href="{{route('homepage')}}">GitHub Repository Comparator</a>
 			</div>
 			{{--<div id="navbar" class="navbar-collapse collapse">--}}
 				{{--<form class="navbar-form navbar-right">--}}
@@ -39,10 +41,18 @@
 				{{--<table data-datatable="" data-dt-options="HomeController.dtOptions" data-dt-columns="HomeController.dtColumns" class="row-border hover"></table>--}}
 				<table class="table table-bordered datatable">
 					<colgroup>
-
+						<col style="width: 25px;"/>
+						<col/>
+						<col/>
+						<col/>
+						<col/>
+						<col/>
+						<col/>
+						<col/>
 					</colgroup>
 					<thead>
 						<tr>
+							<th></th>
 							<th>Repository</th>
 							<th>Watch</th>
 							<th>Stars</th>
@@ -55,6 +65,9 @@
 					<tbody>
 						@foreach ($repositories as $repository)
 						<tr>
+							<td class="text-center">
+								<a href="{{route('remove', [$repository['full_name']])}}" class="btn btn-warning" data-method="delete"><i class="fa fa-trash-o"></i></a>
+							</td>
 							<td><a href="{{$repository['html_url']}}">{{$repository['full_name']}}</a></td>
 							<td>{{$repository['subscribers_count']}}</td>
 							<td>{{$repository['stargazers_count']}}</td>
@@ -67,7 +80,7 @@
 					</tbody>
 					<tfooter>
 						<tr>
-							<td colspan="7">
+							<td colspan="8">
 								{{--<form action="{{url('/add')}}" method="post" class="form-inline">--}}
 								{!!Form::open(['class' => 'form-inline'])!!}
 									<input type="text" class="form-control" name="repository" placeholder="Repository"/>
@@ -88,6 +101,7 @@
 	<script src="{{asset('assets/js/dataTables.bootstrap.js')}}"></script>
 	<script src="{{asset('assets/js/angular.min.js')}}"></script>
 	<script src="{{asset('assets/js/angular-datatables.min.js')}}"></script>
+	<script src="{{asset('assets/js/rails.js')}}"></script>
 	<script src="{{asset('assets/js/app.js')}}"></script>
 </body>
 </html>

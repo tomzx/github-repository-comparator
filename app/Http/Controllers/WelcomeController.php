@@ -67,4 +67,19 @@ class WelcomeController extends Controller {
 
 		return redirect('/')->with('notice_success', 'Repository added!');
 	}
+
+	public function remove(Repository $repository, $repo)
+	{
+		$repositoryValue = $repo;
+
+		if ( ! $repository->isValidRepository($repositoryValue)) {
+			return redirect('/')->with('notice_error', 'Invalid repository');
+		}
+
+		$repositories = Session::get('repositories');
+		unset($repositories[$repositoryValue]);
+		Session::put('repositories', $repositories);
+
+		return redirect('/')->with('notice_success', 'Repository removed!');
+	}
 }
