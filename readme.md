@@ -36,4 +36,4 @@ The main purpose of `GitHub Repository Comparator` is to allow users to quickly 
 
 ## License
 
-The code is licensed under the [MIT license](http://choosealicense.com/licenses/mit/). See LICENSE.
+The code is licensed under the [MIT license](http://choosealicense.com/licenses/mit/). See [LICENSE](LICENSE).
