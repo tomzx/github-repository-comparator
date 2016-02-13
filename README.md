@@ -25,7 +25,7 @@ The main purpose of `GitHub Repository Comparator` is to allow users to quickly 
 
 1. PHP 5.4 <=
 2. [MongoDB](http://www.mongodb.org/)
-3. [PHP MongoDB driver](http://php.net/manual/en/book.mongo.php)
+3. [PHP MongoDB driver](http://php.net/manual/en/set.mongodb.php)
 
 ## Getting started
 
