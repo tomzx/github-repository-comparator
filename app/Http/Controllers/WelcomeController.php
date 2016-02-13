@@ -55,20 +55,30 @@ class WelcomeController extends Controller {
 
 	public function add(Repository $repository)
 	{
-		$repositories = array_map('trim', preg_split('/\r\n|\r|\n/', Input::get('repositories')));
+		$repositories = array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', Input::get('repositories'))));
 
+		$validRepositories = [];
+		$errors = [];
 		foreach ($repositories as $repo) {
 			if ( ! $repository->isValidRepository($repo) || $repository->getOne($repo) === null) {
-//				return redirect('/')->with('notice_error', 'Invalid repository');
+				$errors[] = $repo;
+			} else {
+				$validRepositories[] = $repo;
 			}
 		}
 
 		$sessionRepositories = Session::get('repositories');
-		$repositories = array_combine($repositories, array_fill(0, count($repositories), 1));
+		$repositories = array_combine($validRepositories, array_fill(0, count($validRepositories), 1));
 		$sessionRepositories = array_merge($sessionRepositories, $repositories);
 		Session::put('repositories', $sessionRepositories);
 
-		return redirect('/')->with('notice_success', 'Repository added!');
+		if (!empty($validRepositories) && empty($errors)) {
+			return redirect('/')->with('notice_success', 'Repositories added!');
+		} else if ( ! empty($errors)) {
+			return redirect('/')->with('notice_error', 'Some repositories are invalid: <br/>'.implode('<br/>', $errors));
+		} else {
+			return redirect('/');
+		}
 	}
 
 	public function remove(Repository $repository, $repo)
