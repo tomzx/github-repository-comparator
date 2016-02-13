@@ -11,13 +11,17 @@
 |
 */
 
-Route::get('/', ['as' => 'homepage','uses' => 'WelcomeController@index']);
-Route::post('/', ['as' => 'add', 'uses' => 'WelcomeController@add']);
-Route::delete('{repo}', ['as' => 'remove', 'uses' => 'WelcomeController@remove'])->where('repo', '.+/.+');
+Route::group(['middleware' => ['web']], function () {
+	Route::get('/', ['as' => 'homepage','uses' => 'WelcomeController@index']);
+	Route::post('/', ['as' => 'add', 'uses' => 'WelcomeController@add']);
+	Route::delete('{repo}', ['as' => 'remove', 'uses' => 'WelcomeController@remove'])->where('repo', '.+/.+');
 
-Route::get('home', 'HomeController@index');
+	Route::get('home', 'HomeController@index');
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
+	Route::controllers([
+		'auth' => 'Auth\AuthController',
+		'password' => 'Auth\PasswordController',
+	]);
+});
+
+

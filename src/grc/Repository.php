@@ -5,7 +5,7 @@ namespace GRC;
 use Debugbar;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use MongoClient;
+use MongoDB\Client as MongoClient;
 
 class Repository
 {
@@ -68,11 +68,11 @@ class Repository
 		$result['_grc']['open_issues_count'] = $result['open_issues_count'] - $result['_grc']['pulls_count'];
 
 		$result = $this->setTrackingProperties($result);
-		$this->collection->update(
+		$this->collection->updateOne(
 		[
 			'full_name' => $result['full_name'],
 		],
-			$result,
+			['$set' => $result],
 		[
 			'upsert' => true,
 		]

@@ -83,7 +83,7 @@
 							<td colspan="8">
 								{{--<form action="{{url('/add')}}" method="post" class="form-inline">--}}
 								{!!Form::open(['class' => 'form-inline'])!!}
-									<input type="text" class="form-control" name="repository" placeholder="Repository"/>
+									<textarea class="form-control" name="repositories" placeholder="Repositories"/></textarea>
 									<button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
 								{{--</form>--}}
 								{!!Form::close()!!}

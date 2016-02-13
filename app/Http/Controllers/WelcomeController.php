@@ -55,15 +55,18 @@ class WelcomeController extends Controller {
 
 	public function add(Repository $repository)
 	{
-		$repositoryValue = trim(Input::get('repository'));
+		$repositories = array_map('trim', preg_split('/\r\n|\r|\n/', Input::get('repositories')));
 
-		if ( ! $repository->isValidRepository($repositoryValue) || $repository->getOne($repositoryValue) === null) {
-			return redirect('/')->with('notice_error', 'Invalid repository');
+		foreach ($repositories as $repo) {
+			if ( ! $repository->isValidRepository($repo) || $repository->getOne($repo) === null) {
+//				return redirect('/')->with('notice_error', 'Invalid repository');
+			}
 		}
 
-		$repositories = Session::get('repositories');
-		$repositories[$repositoryValue] = 1;
-		Session::put('repositories', $repositories);
+		$sessionRepositories = Session::get('repositories');
+		$repositories = array_combine($repositories, array_fill(0, count($repositories), 1));
+		$sessionRepositories = array_merge($sessionRepositories, $repositories);
+		Session::put('repositories', $sessionRepositories);
 
 		return redirect('/')->with('notice_success', 'Repository added!');
 	}
